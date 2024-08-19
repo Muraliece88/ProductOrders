@@ -1,0 +1,58 @@
+services:
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ProductOrders
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: Admin@123
+    ports:
+      - "3306:3306"
+  service-registry:
+    image: registry
+    build:
+      context: .
+      dockerfile: /service-registry/Dockerfile
+    ports:
+      - "8761:8761"
+    networks:
+      - app-network
+
+  config-server:
+    image: configserver
+    build:
+      context: .
+      dockerfile: /config-server/Dockerfile
+    ports:
+      - "8888:8888"
+    networks:
+      - app-network
+  proxy-server:
+    image: proxyserver
+    build:
+      context: .
+      dockerfile: /proxyserver/Dockerfile
+    depends_on:
+      - config-server
+    ports:
+      - "8086:8086"
+    networks:
+      - app-network
+  po-server:
+    image: poserver
+    build:
+      context: .
+      dockerfile: /productOrders/Dockerfile
+    depends_on:
+      - config-server
+      - proxy-server
+
+    ports:
+      - "8085:8085"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

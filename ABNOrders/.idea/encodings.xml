@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/adminstration/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/adminstration/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/config-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/config-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/configs/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/configs/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dto/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dto/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dtos/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dtos/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/entities/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/entities/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mappers/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mappers/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/product-order/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/product-order/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/productOrders/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/productOrders/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/proxyAPIs/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/proxyAPIs/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/proxyserver/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/proxyserver/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/repo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/repo/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/reporting/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/reporting/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-registry/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-registry/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>
