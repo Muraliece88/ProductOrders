@@ -29,8 +29,8 @@ to avoid changes at multiple location
 
 Spring boot application runs with active profiles hence properties per environment is placed and the prod profile is configured to point the H2 database. In the real time scenario, different databases can be used based on the environment.
 
-1. All the URLs are SSL enabled. For simplicity considered the self signed certificate
-2. Spring security is enabled with different credentials for prod with different roles for differnt endpoint. Roles can also be configured in tables and can be made run time rather than hardcoding
-3. Actuator endpoints are made available to capture health and metrics which is accessible for user with specific role 
-4. Passwords are hardcoded in the code or property file as there is no vault integration done and in real time it can be fetched from secure vaults
-5. The application related configuration files are located in different git hub repo (mentioned in one of the application properties)
+
+1. Spring security is enabled with different credentials for prod with different roles for differnt endpoint. Roles can also be configured in tables and can be made run time rather than hardcoding
+2. Actuator endpoints are made available to capture health and metrics which is accessible for user with specific role 
+3. Passwords are hardcoded in the code or property file as there is no vault integration done and in real time it can be fetched from secure vaults
+4. The application related configuration files are located in different git hub repo (mentioned in one of the application properties)
