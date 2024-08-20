@@ -30,6 +30,12 @@ public class AdminServiceImpl implements AdminServices{
         this.productRepo = productRepo;
     }
 
+    /**
+     * method to searach order based on id
+     * @param id serach condition
+     * @return order is fetched if exists otherwise no context is retured
+     */
+
     @Override
     public OrderDto searchOrderById(String id) {
       Order order=  orderRepo.findById(Long.parseLong(id)).orElseThrow(() -> new OrderNotFoundException(
@@ -39,6 +45,11 @@ public class AdminServiceImpl implements AdminServices{
        return mappers.INSTANCE.
                 getOrderToDto(order);
     }
+
+    /**
+     * Method to get the top sold items
+     * @return items details
+     */
 
     @Override
     public List<ProductStatsDto> getTopSellingProducts() {
@@ -69,6 +80,10 @@ public class AdminServiceImpl implements AdminServices{
 
 
     }
+    /**
+     * Method to get the least sold items
+     * @return items details
+     */
 
     @Override
     public List<ProductStatsDto> getLeastSellingProducts() {

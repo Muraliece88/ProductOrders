@@ -26,7 +26,11 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-
+    /**
+     * method to searach order based on id
+     * @param orderId serach condition
+     * @return order is fetched if exists otherwise no context is retured
+     */
     @GetMapping(path = searchOrders
             ,produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<?> getProducts(@PathVariable(name="orderId") String orderId)
@@ -36,14 +40,20 @@ public class AdminController {
             return ResponseEntity.ok(orderDetails);
         }
         else{
-            return ResponseEntity.status(404).
+            return ResponseEntity.status(204).
                     body("No order available for the requested id");
         }
             }
+
+    /**
+     * |Method to get the least sold itemsa and to selling oitems
+      * @param reportType type of report the admin wants to see
+     * @return
+     */
     @GetMapping(path = reportPath
             ,produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<?> getProductStats
-            ( @RequestParam (name="reportType") ReportingType reportType)
+            (@RepTypeConstraint @RequestParam (name="reportType") ReportingType reportType)
     {
 
        return switch (reportType){
@@ -52,7 +62,6 @@ public class AdminController {
             case LEASTSELLING ->
                  ResponseEntity.ok( adminService.getLeastSellingProducts());
 
-           default -> throw new BadRequestException("Unexpected value: " + reportType.name());
        };
 
     }

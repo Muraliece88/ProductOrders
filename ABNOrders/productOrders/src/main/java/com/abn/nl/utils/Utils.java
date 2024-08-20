@@ -25,9 +25,10 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class Utils {
-
-    private final String accountSid="AC54c48e47c673f3097ea3769bf507e2fe";
-    private final String accountPwd="5f4ea3b5d74fa96653f2fa7dc4727947";
+    @Value("${messaging.sid}")
+    private  String accountSid;
+    @Value("${msessaging.pwd}")
+    private  String accountPwd;
     @Value("${proxy.api.user.name}")
     private String proxyUser;
     @Value("${proxy.api.user.password}")
@@ -67,12 +68,12 @@ public class Utils {
                         clientResponse ->
                                 Mono.just(String.valueOf(clientResponse.statusCode().value())))
                  .blockOptional().ifPresent(response->{
-                     if(response.equals("201"))
+                     if(response.equals("200"))
                      {
-                         System.out.println("Message delivered");
+                         log.info("Message delievred to the requester: {}" , traceId );
                      }
                      else {
-                         System.out.println("Message not delivered due to "+response);
+                         log.info("Message nor delievred to the requester: {}" , traceId );
                      }
                  });
 

@@ -68,7 +68,6 @@ class ShoppingControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "dummy", password = "dummy", roles = "ADMIN")
     void getAllProducts() throws Exception {
         Product product = new Product();
         product.setName("Shirt");
@@ -85,7 +84,7 @@ class ShoppingControllerTest {
 
     }
     @Test
-    @WithMockUser(username = "dummy", password = "dummy", roles = "ADMIN")
+
     void getProductswithparam() throws Exception {
         Product product = new Product();
         product.setName("Shirt");
