@@ -1,5 +1,5 @@
 # Use a base image with JDK 17
-FROM openjdk:17-jdk-slim AS builder
+FROM openjdk:17-jdk-slim AS DEPS
 RUN apt-get update && \
     apt-get install -y maven && \
     apt-get clean
@@ -9,7 +9,7 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-COPY pom.xml ./
+
 COPY configs/pom.xml configs/
 COPY config-server/pom.xml config-server/
 COPY entities/pom.xml entities/
@@ -18,30 +18,26 @@ COPY proxyserver/pom.xml proxyserver/
 COPY repo/pom.xml repo/
 COPY service-registry/pom.xml service-registry/
 COPY adminstration/pom.xml adminstration/
+COPY pom.xml ./
+RUN mvn -B -e -C org.apache.maven.plugins:maven-dependency-plugin:3.1.2:go-offline -DexcludeArtifactIds=repo,entities,productOrders,proxyserver,adminstration,config-server
 
+FROM openjdk:17-jdk-slim AS BUILDER
+RUN apt-get update && \
+    apt-get install -y maven && \
+    apt-get clean
 
+RUN apt-get update && \
+    apt-get install -y git
+WORKDIR /app
+
+COPY --from=deps /root/.m2 /root/.m2
+COPY --from=deps /app/ /app
 COPY configs/src configs/src
-COPY config-server/src config-server/src
-COPY entities/src entities/src
-COPY productOrders/src productOrders/src
-COPY proxyserver/src proxyserver/src
-COPY repo/src repo/src
 COPY service-registry/src service-registry/src
-COPY adminstration/src adminstration/src
-
-
-COPY config-server/src/main/resources config-server/src/main/resources
-COPY productOrders/src/main/resources productOrders/src/main/resources
-COPY proxyserver/src/main/resources proxyserver/src/main/resources
-COPY service-registry/src/main/resources service-registry/src/main/resources
-COPY adminstration/src/main/resources adminstration/src/main/resources
-
-RUN mvn install -N
-RUN mvn install -pl configs,service-registry -am
 
 
 EXPOSE 8761
-
-CMD mvn spring-boot:run -pl service-registry
+WORKDIR /app/service-registry
+CMD mvn spring-boot:run
 
 
