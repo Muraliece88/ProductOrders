@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService{
      */
 
     @Override
-    public List<ProductDTO> getProducts(List<String> productNames, String traceId) {
+    public List<ProductDTO>getProducts(List<String> productNames, String traceId) {
 
         if(productNames==null)
         {

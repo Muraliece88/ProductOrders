@@ -1,0 +1,125 @@
+openapi: '3.0.3'
+info:
+  description: APIs for Placing order, fetch and reporting
+  title:  Order placement and management  Api
+  version: '3.0.0'
+
+servers: [
+  {
+    'url': 'http://localhost:8085/api/v1/products',
+    'description': 'Base path of the API',
+
+
+  }]
+
+tags:
+  - name: OrderPlace
+    description: APIs for place order
+security:
+  - basicAuth: []
+
+paths: {
+  '/fetchProducts': {
+    get: {
+      'operationId': 'fetchProducts',
+      'description': 'API to return all avilable products',
+      'parameters': [
+        {
+          'name': 'products',
+          'in': 'query',
+          'required': false,
+          'description': 'proucts to be searched',
+          'schema': {
+            'type': 'string',
+            'example': 'Shirt'
+          }
+        }
+      ],
+
+      'responses': {
+        '200': {
+          'description': 'successful return of all products',
+          'content': {
+            'application/json': {
+              'schema': {
+                '$ref': '#/components/schemas/ProductDTO'
+              }
+            }
+          }
+        },
+
+        '204': {
+          description: No products returned
+        },
+
+        '403': {
+          '$ref': '#/components/responses/AuthorizationException'
+        }
+      }}
+
+  }
+}
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+
+  responses:
+    AuthenticationException:
+      description: when an invalid credentials is supplied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+          example:
+            error: Invalid credentials supplied
+    AuthorizationException:
+      description: the user when doesnt have privillage
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+          example:
+            error: Access denied due to insufficient privilage
+
+  schemas:
+    Errors:
+      type: object
+      properties:
+        status:
+          description: 'status of the error code'
+          type: integer
+        message:
+          description: 'error message'
+          type: string
+        timestamp:
+          description: 'timestamp value during when exception occured'
+          type: string
+
+
+
+    ProductDTO:
+      type: object
+      properties:
+        productName:
+          description: 'Name of the product'
+          type: integer
+        brand:
+          description: 'brand name of the product'
+          type: string
+        stockleft:
+          description: 'Available stock in the market'
+          type: string
+        price:
+          description: 'price of the product'
+          type: string
+        currency:
+          description: 'Currency type  of the price of the product'
+          type: string
+        seller:
+          description: 'seller name'
+          type: string
+
+
