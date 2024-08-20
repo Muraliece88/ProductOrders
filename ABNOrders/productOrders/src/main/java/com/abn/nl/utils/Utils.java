@@ -39,6 +39,18 @@ public class Utils {
         this.discoveryClient = discoveryClient;
     }
 
+
+    /**
+     * Non sync method to send the nottification  once order is placed
+     * @param id
+     * @param orderDto
+     * @param products
+     * @param proxyBasePath
+     * @param proxyAppName
+     * @param exchangeapi
+     * @param messageapi
+     * @param traceId
+     */
     @Async
     @CircuitBreaker(name = "messsagingService", fallbackMethod = "noificationFailure")
     public void sendNotification(Long id,
@@ -79,6 +91,16 @@ public class Utils {
 
         }
 
+    /**
+     * Calcuate amout the rrequester has to pay
+     *
+     * @param products
+     * @param webclient
+     * @param exchangeApi
+     * @param orderDto
+     * @param traceId
+     * @return
+     */
     private BigDecimal calculateTotalAmt(Set<Product> products,
                                          WebClient webclient,
                                          String exchangeApi,OrderDto orderDto,String traceId)
@@ -117,12 +139,25 @@ public class Utils {
 
     }
 
+    /**
+     * External apis exposed over proxy and method to get them
+     * @param discoveryClient
+     * @param proxyAppName
+     * @return
+     */
+
     private String  fetchProxyDetails(  DiscoveryClient discoveryClient,String proxyAppName)
     {
         return discoveryClient.getInstances(proxyAppName).
                 stream().map(serviceInstance -> serviceInstance.getUri().toString())
                 .findAny().orElseThrow(()-> new ProxyNotFoundException("No such proxy server available"));
     }
+
+    /**
+     * Construct the client for calling the external APIs
+     * @param url
+     * @return
+     */
 
     private WebClient getWebClient(String url) {
         String encoded=Base64.getEncoder().
@@ -133,6 +168,19 @@ public class Utils {
                 .build();
     }
 
+
+    /**
+     * Triggers in case of the API unavilability
+     * @param id
+     * @param orderDto
+     * @param products
+     * @param proxyBasePath
+     * @param proxyAppName
+     * @param exchangeapi
+     * @param messageapi
+     * @param traceId
+     * @param throwable
+     */
     private void noificationFailure(Long id,
                                     OrderDto orderDto,
                                     Set<Product> products,

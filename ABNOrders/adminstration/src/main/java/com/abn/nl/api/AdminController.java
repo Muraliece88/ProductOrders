@@ -1,17 +1,14 @@
 package com.abn.nl.api;
 
 import com.abn.nl.dto.OrderDto;
-import com.abn.nl.dto.ProductStatsDto;
 import com.abn.nl.dto.ReportingType;
 import com.abn.nl.service.AdminServiceImpl;
 import com.abn.nl.validator.RepTypeConstraint;
-import jakarta.ws.rs.BadRequestException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j

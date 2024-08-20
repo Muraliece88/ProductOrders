@@ -23,13 +23,21 @@ public class ProxyServiceImpl implements ProxyService {
     private final WebClient exchangeClient;
     private final WebClient messagingClient;
     private final String prefix="/Messages.json";
+    private final String USD="USD";
 
     public ProxyServiceImpl(@Qualifier("exchangeClient")WebClient exchangeClient,@Qualifier("messagingClient") WebClient messagingClient) {
         this.exchangeClient = exchangeClient;
         this.messagingClient = messagingClient;
     }
 
-
+    /**
+     * Method to send message to the requster
+     * @param userName
+     * @param password
+     * @param message
+     * @param traceId
+     * @return
+     */
     @Override
     public Mono<String> sendMessage(String userName, String password, MultiValueMap<String, String> message,String traceId) {
 
@@ -42,6 +50,13 @@ public class ProxyServiceImpl implements ProxyService {
                     onErrorResume(error-> Mono.just(error.getMessage()));
     }
 
+    /**
+     * Method to fetch the dollar equivalent value
+     * @param currencies
+     * @param traceId
+     * @return
+     */
+
     @Override
     public Map<String, Double> fetchRates(Set<String> currencies,String traceId) {
         Map<String, Double> usdRates = new HashMap<>();
@@ -52,7 +67,7 @@ public class ProxyServiceImpl implements ProxyService {
                 .onErrorResume(e->Mono.error(e));
         responseMono.collectList().blockOptional().ifPresent(exchangeResponses -> {
             exchangeResponses.forEach(exchangeResponse -> {
-                usdRates.put(exchangeResponse.getBase(),exchangeResponse.getRates().get("USD"));
+                usdRates.put(exchangeResponse.getBase(),exchangeResponse.getRates().get(USD));
             });
         });
         return usdRates;

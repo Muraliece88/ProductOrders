@@ -3,20 +3,20 @@ package com.abn.nl.service;
 import com.abn.nl.Order;
 import com.abn.nl.OrderRepo;
 import com.abn.nl.Product;
+import com.abn.nl.ProductsRepo;
 import com.abn.nl.dtos.OrderDto;
 import com.abn.nl.dtos.ProductDTO;
 import com.abn.nl.dtos.ProductOrderDto;
 import com.abn.nl.exceptions.NotificationException;
 import com.abn.nl.exceptions.ProductNotFoundException;
 import com.abn.nl.mappers.ProductMappers;
-import com.abn.nl.ProductsRepo;
 import com.abn.nl.utils.Utils;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -47,6 +47,13 @@ public class ProductServiceImpl implements ProductService{
 
     }
 
+    /**
+     * This method is to get the product detials based on search condition if no param passed then all product is returned
+     * @param productNames search condition
+     * @param traceId for logging and tracing
+     * @return
+     */
+
     @Override
     public List<ProductDTO> getProducts(List<String> productNames, String traceId) {
 
@@ -62,6 +69,13 @@ public class ProductServiceImpl implements ProductService{
         }
     }
 
+
+    /**Method to place a new order
+     *
+     * @param orderDto Order input details
+     * @param traceId logging and tracing
+     * @return Id if the order is placed
+     */
     @Override
     @Transactional
     public Long placeOrder(OrderDto orderDto,String traceId) {

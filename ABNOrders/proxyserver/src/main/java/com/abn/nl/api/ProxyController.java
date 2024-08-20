@@ -28,6 +28,14 @@ public class ProxyController {
         this.proxyService = proxyService;
     }
 
+
+    /**
+     * Method triggers when request to place a message
+     * @param userName
+     * @param password
+     * @param message
+     * @return
+     */
     @PostMapping (path = messaging,consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
             , produces = MediaType.APPLICATION_JSON_VALUE)
     private Mono<ResponseEntity<String>> sendMessage(@RequestHeader(name = "userName") String userName,
@@ -41,6 +49,12 @@ public class ProxyController {
         return  result.flatMap(response-> Mono.just(ResponseEntity.ok(response)))
                 .onErrorResume(throwable -> Mono.just(ResponseEntity.status(500).body(throwable.getMessage())));
     }
+
+    /**
+     * method to fetch the exchange rates
+     * @param currencies
+     * @return
+     */
     @GetMapping(path = exchange
             , produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<Map<String, Double>> getExchangeRates(@RequestParam(name = "currency") Set<String> currencies) {
