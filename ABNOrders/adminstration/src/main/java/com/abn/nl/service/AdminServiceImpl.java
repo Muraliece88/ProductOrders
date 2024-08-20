@@ -9,6 +9,7 @@ import com.abn.nl.exceptions.OrderNotFoundException;
 import com.abn.nl.mappers.OrderMapper;
 
 import com.abn.nl.OrderRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
 
+
+@Slf4j
 @Service
 public class AdminServiceImpl implements AdminServices{
     private  final OrderRepo orderRepo;

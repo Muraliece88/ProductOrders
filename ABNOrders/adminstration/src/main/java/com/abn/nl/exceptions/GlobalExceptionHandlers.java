@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
 
@@ -42,6 +43,12 @@ public class GlobalExceptionHandlers {
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Errors> handleMethodAugumentInvalid(MethodArgumentNotValidException ex) {
+        log.error("exception occured"+ex.getMessage());
+        Errors errors=new Errors(HttpStatus.BAD_REQUEST.value(), ex.getBindingResult().getFieldError().getDefaultMessage(), LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(errors);
+    }
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Errors> handleMethodMismatchInvalid(MethodArgumentNotValidException ex) {
         log.error("exception occured"+ex.getMessage());
         Errors errors=new Errors(HttpStatus.BAD_REQUEST.value(), ex.getBindingResult().getFieldError().getDefaultMessage(), LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(errors);

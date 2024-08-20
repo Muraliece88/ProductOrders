@@ -4,12 +4,14 @@ import com.abn.nl.dto.OrderDto;
 import com.abn.nl.dto.ReportingType;
 import com.abn.nl.service.AdminServiceImpl;
 import com.abn.nl.validator.RepTypeConstraint;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -32,6 +34,8 @@ public class AdminController {
             ,produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<?> getProducts(@PathVariable(name="orderId") String orderId)
     {
+        String correlationId = UUID.randomUUID().toString();
+        log.debug("Request search  order with trace ID: {}", correlationId);
        OrderDto orderDetails= adminService.searchOrderById(orderId);
         if(Optional.ofNullable(orderDetails).isPresent()){
             return ResponseEntity.ok(orderDetails);
@@ -50,9 +54,10 @@ public class AdminController {
     @GetMapping(path = reportPath
             ,produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<?> getProductStats
-            (@RepTypeConstraint @RequestParam (name="reportType") ReportingType reportType)
+            (@Valid @RequestParam (name="reportType") ReportingType reportType)
     {
-
+        String correlationId = UUID.randomUUID().toString();
+        log.debug("Request the report type: {} for the trace: {}",reportType, correlationId);
        return switch (reportType){
            case TOPSELLING ->
                  ResponseEntity.ok( adminService.getTopSellingProducts());

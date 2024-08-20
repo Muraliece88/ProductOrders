@@ -8,11 +8,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import static java.lang.annotation.ElementType.*;
+
 @Constraint(validatedBy = ReportTypeValidator.class)
-@Target({ElementType.PARAMETER, ElementType.FIELD})
+@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RepTypeConstraint {
-    String message() default "Invalid reporting type";
+    String message() default  "must match \"{regexp}\"";
 
     Class<?>[] groups() default {};
 
