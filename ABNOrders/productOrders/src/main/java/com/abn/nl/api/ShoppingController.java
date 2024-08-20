@@ -65,7 +65,7 @@ public class ShoppingController {
         log.debug("Request place order with trace ID: {}", correlationId);
         Long id=serviceImpl.placeOrder(order,correlationId);
         if(id!=null) {
-            return ResponseEntity.ok()
+            return ResponseEntity.status(201)
                     .contentType(MediaType.APPLICATION_JSON_UTF8).
                     body("Your order has been placed successfully and the id is: "+id);
         }
