@@ -1,6 +1,7 @@
 package com.abn.nl.exceptions;
 
 import jakarta.validation.ConstraintViolationException;
+import jakarta.ws.rs.BadRequestException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,6 +54,13 @@ public class GlobalExceptionHandlers {
     public ResponseEntity<Errors> handleMethodAugumentInvalid(MethodArgumentNotValidException ex) {
         log.error("exception occured"+ex.getMessage());
         Errors errors=new Errors(HttpStatus.BAD_REQUEST.value(), ex.getBindingResult().getFieldError().getDefaultMessage(), LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(errors);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<Errors> handleBadRequest(BadRequestException ex) {
+        log.error("exception occured"+ex.getMessage());
+        Errors errors=new Errors(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(errors);
     }
 
